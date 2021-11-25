@@ -5,6 +5,7 @@ from typing import List, NamedTuple, Optional
 import pytz
 import db
 import exceptions
+import diagram_creator
 
 
 class Message(NamedTuple):
@@ -65,6 +66,7 @@ def get_month_statistics(user) -> str:
                    f"group by category "
                    f"order by sum(amount) DESC")
     result = cursor.fetchall()
+    # print(result)
     if not result:
         return "В этом месяце ещё нет расходов"
     sum_expense = 0
@@ -73,6 +75,8 @@ def get_month_statistics(user) -> str:
         sum_expense += int(expense[1])
         all_today_expenses += expense[0] + ": " + str(expense[1]) + " руб.\n"
     all_today_expenses += "\nВсего: " + str(sum_expense) + " руб."
+    analyse_result = diagram_creator.analyse_data(result)
+    diagram_creator.plot_diagram(analyse_result)
     return all_today_expenses
 
 

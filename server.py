@@ -65,7 +65,11 @@ async def today_statistics(message: types.Message):
 async def month_statistics(message: types.Message):
     """Отправляет статистику трат текущего месяца"""
     answer_message = expenses.get_month_statistics(message.from_user.id)
+    # photo = types.InputMediaPhoto('export/diagram.jpg', 'diagram.jpg')
+    photo = types.InputFile('export/diagram.jpg', 'diagram.jpg')
     await message.answer(answer_message)
+    await message.answer_photo(photo=photo)
+    os.remove('export/diagram.jpg')
 
 
 @dp.message_handler(commands=['expenses'])
