@@ -3,7 +3,6 @@ import logging
 import os
 from config import API_TOKEN
 from aiogram import Bot, Dispatcher, executor, types
-
 import db
 import exceptions
 import expenses
